@@ -2,6 +2,7 @@ import * as THREE from "three"
 import { solarSystem, geometry } from "./baseObjects"
 import { planets } from "./planets"
 import { createStars } from "./stars"
+import { sun, sunAnimation, sunGlow } from "./sun"
 
 const scene = new THREE.Scene()
 
@@ -21,12 +22,9 @@ const aspect = window.innerWidth / window.innerHeight
 
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
 camera.position.z = 50
+// camera.rotation.y = -5
 
-const materialSun = new THREE.MeshBasicMaterial({color: "rgba(255, 251, 0, 1)"})
-const sun = new THREE.Mesh(geometry, materialSun)
-solarSystem.add(sun)
 scene.add(sun)
-sun.scale.set(5,5,5)
 
 const stars = createStars(10000, 1000)
 
@@ -43,10 +41,9 @@ function animate(){
         }
     }
     stars.geometry.attributes.position.needsUpdate = true
-        
-
-    // stars.rotation.y += 0.0002
+    sunAnimation()
     renderer.render(scene, camera)
 }
 
 renderer.setAnimationLoop(animate)
+
