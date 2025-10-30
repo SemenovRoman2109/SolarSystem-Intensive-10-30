@@ -12,7 +12,7 @@ export function createPlanet(name, size, distance, speed){
     planet.position.x = distance
 
     planetGroup.add(planet)
-    return {group: planetGroup, planet:planet, speed:speed}
+    return {name: name, group: planetGroup, planet:planet, speed:speed}
 } 
 
 export const planets = [

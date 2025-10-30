@@ -49,7 +49,7 @@ export function sunAnimation(){
     sunGlow.material.opacity = pulsation
 
     const position = solarWind.geometry.attributes.position.array
-    for (let i = 0; i < position.length / 3; i+=3){
+    for (let i = 0; i < position.length; i += 3){
         position[i] += position[i] * 0.01
         position[i + 1] += position[i + 1] * 0.01
         position[i + 2] += position[i + 2] * 0.01
