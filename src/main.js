@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import $, { event } from "jquery"
 import { solarSystem, geometry } from "./baseObjects"
-import { planets } from "./planets"
+import { planets, showPlanetInfo } from "./planets"
 import { createStars } from "./stars"
 import { sun, sunAnimation, sunGlow } from "./sun"
 
@@ -28,6 +28,11 @@ $(() => {
 
     scene.add(sun)
 
+    const sunLight = new THREE.PointLight(0xffffff, 1000, 0, 2)
+    const ambientLight = new THREE.AmbientLight(0x222222)
+    scene.add(sunLight)
+    scene.add(ambientLight)
+
     const stars = createStars(10000, 1000)
     let targetZ = camera.position.z
     let chosenPlanet = null
@@ -51,11 +56,14 @@ $(() => {
         const button = $("<button>").text(planet.name).addClass("button").on("click", () => {
             chosenPlanet = planet.planet
             targetZ = 40
+            showPlanetInfo(planet.name)
         })
         buttons.append(button)
     })
     const sunButton = $("<button>").text("Sun").addClass("button").on("click", ()=>{
         chosenPlanet = null
+        // showPlanetInfo("Sun")
+        $("#infoPlanet").fadeOut(300)
     })
     buttons.append(sunButton)
     
@@ -63,7 +71,7 @@ $(() => {
         if (chosenPlanet == null){
             camera.position.z += (targetZ - camera.position.z) * 0.05
             camera.position.x = 0
-            camera.position.y = 10
+            camera.position.y = 30
             camera.lookAt(0, 0, 0)
         }else{
             cameraDistance += (targetZ - cameraDistance) * 0.05
